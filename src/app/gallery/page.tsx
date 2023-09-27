@@ -2,13 +2,15 @@ import UploadButton from "./UploadButton";
 import cloudinary from "cloudinary";
 import CloudinaryImages from "./CloudinaryImages";
 
-type SearchResult = {
+export type SearchResult = {
   public_id: string;
+  tags: string[];
 };
 async function Gallerypage() {
   const results = (await cloudinary.v2.search
     .expression("resource_type: image")
     .sort_by("created_at", "desc")
+    .with_field("tags")
     .max_results(30)
     .execute()) as { resources: SearchResult[] };
   return (
@@ -22,9 +24,10 @@ async function Gallerypage() {
           {results.resources.map((result) => (
             <CloudinaryImages
               key={result.public_id}
+              src={result.public_id}
               width="400"
               height="300"
-              src={result.public_id}
+              imageData={result}
               alt="images"
             />
           ))}
