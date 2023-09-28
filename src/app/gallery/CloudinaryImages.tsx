@@ -6,7 +6,9 @@ import { useTransition } from "react";
 import { SearchResult } from "./page";
 import FullHeart from "@/components/icons/fullheart";
 
-function CloudinaryImages(props: any & { imageData: SearchResult }) {
+function CloudinaryImages(
+  props: any & { imageData: SearchResult; path: string }
+) {
   const [transition, startTransition] = useTransition();
   const { imageData } = props;
   const isFavorite = imageData.tags.includes("favorite");
@@ -16,10 +18,10 @@ function CloudinaryImages(props: any & { imageData: SearchResult }) {
       <CldImage {...props} src={imageData.public_id} />
       {isFavorite ? (
         <FullHeart
-          className="absolute top-2 right-2 hover:text-white text-red cursor-pointer"
+          className="absolute top-2 right-2 hover:text-white text-red-700 cursor-pointer"
           onClick={() => {
             startTransition(() => {
-              setAsFavoriteActions(imageData.public_id, false);
+              setAsFavoriteActions(imageData.public_id, false, props.path);
             });
           }}
         />
@@ -28,7 +30,7 @@ function CloudinaryImages(props: any & { imageData: SearchResult }) {
           className="absolute top-2 right-2 hover:text-red-700 cursor-pointer"
           onClick={() => {
             startTransition(() => {
-              setAsFavoriteActions(imageData.public_id, true);
+              setAsFavoriteActions(imageData.public_id, true, props.path);
             });
           }}
         />
