@@ -23,7 +23,6 @@ async function Gallerypage() {
         <div className="grid grid-cols-4 gap-4">
           {results.resources.map((result) => (
             <CloudinaryImages
-              path="/gallery"
               key={result.public_id}
               src={result.public_id}
               width="400"
