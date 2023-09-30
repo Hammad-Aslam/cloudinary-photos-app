@@ -3,7 +3,6 @@ import cloudinary from "cloudinary";
 import { SearchResult } from "../gallery/page";
 import CloudinaryImages from "../gallery/CloudinaryImages";
 import { useEffect, useState } from "react";
-import { createSecureContext } from "tls";
 
 function FavoriteList({
   intialResources,
