@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Menu from "../icons/menu";
 import FolderPlus from "../icons/folderplus";
+import { AddToAlbumDialog } from "./addtoalbum";
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
@@ -26,13 +27,16 @@ export function ImageMenu() {
     <div className="absolute top-2 right-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="secondry" className="w-8 h-8 p-0">
+          <Button variant="secondry" className="w-8 h-8 p-0 flex items-center">
             <Menu />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-32">
-          <DropdownMenuLabel>Add to Album</DropdownMenuLabel>
-          <FolderPlus />
+        <DropdownMenuContent className="w-42">
+          <div className="flex items-center">
+            <FolderPlus className="mr-2" />
+            <DropdownMenuLabel asChild>Add to Album</DropdownMenuLabel>
+            <AddToAlbumDialog />
+          </div>
           <DropdownMenuSeparator />
         </DropdownMenuContent>
       </DropdownMenu>
