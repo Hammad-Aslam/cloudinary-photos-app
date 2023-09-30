@@ -5,6 +5,7 @@ import setAsFavoriteActions from "./actions";
 import { useState, useTransition } from "react";
 import { SearchResult } from "./page";
 import FullHeart from "@/components/icons/fullheart";
+import { ImageMenu } from "@/components/ui/imagemenu";
 
 function CloudinaryImages(
   props: {
@@ -23,7 +24,7 @@ function CloudinaryImages(
       <CldImage {...props} src={imageData.public_id} />
       {isFavorited ? (
         <FullHeart
-          className="absolute top-2 right-2 hover:text-white text-red-700 cursor-pointer"
+          className="absolute top-2 left-2 hover:text-white text-red-700 cursor-pointer"
           onClick={() => {
             onUnheart?.(imageData);
             setIsFavorited(false);
@@ -34,7 +35,7 @@ function CloudinaryImages(
         />
       ) : (
         <Heart
-          className="absolute top-2 right-2 hover:text-red-700 cursor-pointer"
+          className="absolute top-2 left-2 hover:text-red-700 cursor-pointer"
           onClick={() => {
             startTransition(() => {
               setIsFavorited(true);
@@ -43,6 +44,7 @@ function CloudinaryImages(
           }}
         />
       )}
+      <ImageMenu />
     </div>
   );
 }
