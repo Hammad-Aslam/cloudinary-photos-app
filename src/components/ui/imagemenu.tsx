@@ -16,9 +16,9 @@ import Menu from "../icons/menu";
 import FolderPlus from "../icons/folderplus";
 import { AddToAlbumDialog } from "./addtoalbum";
 
-type Checked = DropdownMenuCheckboxItemProps["checked"];
+type Checked = DropdownMenuCheckboxItemProps[];
 
-export function ImageMenu() {
+export function ImageMenu({ image }: { image: SearchResult }) {
   const [showStatusBar, setShowStatusBar] = React.useState<Checked>(true);
   const [showActivityBar, setShowActivityBar] = React.useState<Checked>(false);
   const [showPanel, setShowPanel] = React.useState<Checked>(false);
@@ -35,7 +35,7 @@ export function ImageMenu() {
           <div className="flex items-center">
             <FolderPlus className="mr-2" />
             <DropdownMenuLabel asChild>Add to Album</DropdownMenuLabel>
-            <AddToAlbumDialog />
+            <AddToAlbumDialog image={image} />
           </div>
           <DropdownMenuSeparator />
         </DropdownMenuContent>

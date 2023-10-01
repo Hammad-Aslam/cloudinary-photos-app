@@ -1,3 +1,4 @@
+import { SearchResult } from "@/app/gallery/page";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,44 +11,50 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { log } from "console";
+import { useState } from "react";
+import { CreateFolder } from "../action";
 
-export function AddToAlbumDialog() {
+export function AddToAlbumDialog({ image }: { image: SearchResult }) {
+  const [Albumstate, setAlbumState] = useState("");
+  const [open, setOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">Add An Album</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Add An Album</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Add Album you want to Add in Gallery
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Name
+              Album
             </Label>
             <Input
-              id="name"
-              defaultValue="Pedro Duarte"
-              className="col-span-3"
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input
-              id="username"
-              defaultValue="@peduarte"
+              onChange={(e) => setAlbumState(e.target.value)}
+              id="album name"
+              value={Albumstate}
+              defaultValue="family"
               className="col-span-3"
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button
+            onClick={async () => {
+              console.log(image);
+              setOpen(false);
+              await CreateFolder(image, Albumstate);
+            }}
+            type="submit"
+          >
+            Add to Album
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
