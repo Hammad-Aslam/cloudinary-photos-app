@@ -1,7 +1,8 @@
-"use client";
-
 import * as React from "react";
-import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
+import {
+  DropdownMenuCheckboxItemProps,
+  DropdownMenuItem,
+} from "@radix-ui/react-dropdown-menu";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,14 +16,13 @@ import {
 import Menu from "../icons/menu";
 import FolderPlus from "../icons/folderplus";
 import { AddToAlbumDialog } from "./addtoalbum";
+import { SearchResult } from "@/app/gallery/page";
+import Link from "next/link";
+import { Pencil } from "lucide-react";
 
 type Checked = DropdownMenuCheckboxItemProps[];
 
 export function ImageMenu({ image }: { image: SearchResult }) {
-  const [showStatusBar, setShowStatusBar] = React.useState<Checked>(true);
-  const [showActivityBar, setShowActivityBar] = React.useState<Checked>(false);
-  const [showPanel, setShowPanel] = React.useState<Checked>(false);
-
   return (
     <div className="absolute top-2 right-2">
       <DropdownMenu>
@@ -32,11 +32,26 @@ export function ImageMenu({ image }: { image: SearchResult }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-42">
-          <div className="flex items-center">
-            <FolderPlus className="mr-2" />
-            <DropdownMenuLabel asChild>Add to Album</DropdownMenuLabel>
+          <DropdownMenuItem asChild>
             <AddToAlbumDialog image={image} />
+          </DropdownMenuItem>
+          <div className="flex items-center">
+            <DropdownMenuLabel asChild>Add to Album</DropdownMenuLabel>
           </div>
+          <DropdownMenuItem asChild>
+            <Button
+              className="cursor-pointer flex justify-start items-center pl-4 text-blue-500 hover:text-blue-700"
+              asChild
+              variant="ghost"
+            >
+              <Link
+                href={`/edit?publicId=${encodeURIComponent(image.public_id)}`}
+              >
+                <Pencil className="mr-2 w-4 h-4" />
+                Edit
+              </Link>
+            </Button>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
         </DropdownMenuContent>
       </DropdownMenu>
