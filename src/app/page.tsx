@@ -14,7 +14,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <CldUploadButton
         uploadPreset="fqeqmrqv"
-        onUpload={(result: UploadResult) => {
+        onUpload={(result: any) => {
           setImageId(result.info.public_id);
         }}
       />

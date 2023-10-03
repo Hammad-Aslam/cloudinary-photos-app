@@ -20,9 +20,7 @@ function SearchForm({ initialSearch }: { initialSearch: string }) {
         router.refresh();
       }}
     >
-      <Label htmlFor="tag-name" className="text-left">
-        Search By tag
-      </Label>
+      <Label className="text-left">Search By tag</Label>
       <div className="flex gap-2">
         <Input
           onChange={(e) => settagName(e.target.value)}
