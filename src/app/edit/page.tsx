@@ -11,7 +11,13 @@ function EditPage({
   searchParams: { publicId: string };
 }) {
   const [transformation, setTransformation] = useState<
-    undefined | "generative-fill" | "blur" | "pixelate" | "tint"
+    | undefined
+    | "generative-fill"
+    | "blur"
+    | "pixelate"
+    | "tint"
+    | "effects"
+    | "overlays"
   >();
   const [Pendingprompt, setPendingPrompt] = useState("");
   const [prompt, setPrompt] = useState("");
@@ -81,6 +87,30 @@ function EditPage({
           >
             Apply Pixelate
           </Button>
+          <Button
+            onClick={() => {
+              setTransformation("effects");
+            }}
+            className={`${
+              transformation === "blur"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-300"
+            } hover:bg-blue-600 px-4 py-2 rounded-md mr-2`}
+          >
+            Apply Effects
+          </Button>
+          <Button
+            onClick={() => {
+              setTransformation("overlays");
+            }}
+            className={`${
+              transformation === "blur"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-300"
+            } hover:bg-blue-600 px-4 py-2 rounded-md mr-2`}
+          >
+            Apply Overlays
+          </Button>
         </div>
         <div className="grid grid-cols-2 gap-12">
           <CldImage src={publicId} height={400} width={300} alt="Image" />
@@ -94,24 +124,38 @@ function EditPage({
               fillBackground={{ prompt }}
             />
           )}
-          {transformation === "blur" && (
+          {transformation === "effects" && (
             <CldImage
               src={publicId}
               height={400}
               width={300}
               alt="Image"
               crop="pad"
-              blur="1200"
+              effects={[
+                {
+                  background: "green",
+                },
+                {
+                  gradientFade: true,
+                },
+                {
+                  gradientFade: "symetric,x_0.5",
+                },
+              ]}
             />
           )}
-          {transformation === "pixelate" && (
+          {transformation === "overlays" && (
             <CldImage
               src={publicId}
               height={400}
-              width={300}
+              width={500}
               alt="Image"
               crop="pad"
-              pixelate
+              overlays={[
+                {
+                  text: "Hammad Aslam",
+                },
+              ]}
             />
           )}
         </div>
