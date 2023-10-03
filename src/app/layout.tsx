@@ -5,14 +5,19 @@ import { Inter } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import Heart from "../components/icons/heart";
 import Link from "next/link";
-
+import cloudinary from "cloudinary";
+import { Folder } from "./albums/page";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CLOUDINARY APP",
   description: "",
 };
-function SideMenu() {
+
+async function SideMenu() {
+  const { folders } = (await cloudinary.v2.api.root_folders()) as {
+    folders: Folder[];
+  };
   return (
     <div className="pb-12 w-1/6">
       <div className="space-y-4 py-4">
@@ -67,7 +72,18 @@ function SideMenu() {
                 Albums
               </Link>
             </Button>
-
+            {folders.map((folder) => (
+              <Button
+                variant="ghost"
+                asChild
+                className="w-full justify-start flex gap-2"
+                key={folder.name}
+              >
+                <Link className="pl-12" href={`/albums/${folder.path}`}>
+                  {folder.name}
+                </Link>
+              </Button>
+            ))}
             <Button
               asChild
               variant="ghost"
