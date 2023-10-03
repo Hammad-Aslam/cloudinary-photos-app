@@ -1,5 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@radix-ui/react-label";
 import { CldImage } from "next-cloudinary";
 import { useState } from "react";
 
@@ -11,7 +13,8 @@ function EditPage({
   const [transformation, setTransformation] = useState<
     undefined | "generative-fill" | "blur" | "pixelate" | "tint"
   >();
-
+  const [Pendingprompt, setPendingPrompt] = useState("");
+  const [prompt, setPrompt] = useState("");
   return (
     <section>
       <div className="flex flex-col gap-8">
@@ -32,18 +35,28 @@ function EditPage({
           >
             Clear All
           </Button>
-          <Button
-            onClick={() => {
-              setTransformation("generative-fill");
-            }}
-            className={`${
-              transformation === "generative-fill"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-300"
-            } hover:bg-blue-600 px-4 py-2 rounded-md mr-2`}
-          >
-            Apply Fill
-          </Button>
+          <div className="flex flex-col gap-4">
+            <Button
+              onClick={() => {
+                {
+                  setTransformation("generative-fill");
+                  setPrompt(Pendingprompt);
+                }
+              }}
+              className={`${
+                transformation === "generative-fill"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-300"
+              } hover:bg-blue-600 px-4 py-2 rounded-md mr-2`}
+            >
+              Apply Generative Fill
+            </Button>
+            <Label>Prompt</Label>
+            <Input
+              value={Pendingprompt}
+              onChange={(e) => setPendingPrompt(e.currentTarget.value)}
+            />
+          </div>
           <Button
             onClick={() => {
               setTransformation("blur");
@@ -74,11 +87,11 @@ function EditPage({
           {transformation === "generative-fill" && (
             <CldImage
               src={publicId}
-              height={400}
-              width={300}
+              height={800}
+              width={1200}
               alt="Image"
               crop="pad"
-              fillBackground
+              fillBackground={{ prompt }}
             />
           )}
           {transformation === "blur" && (
